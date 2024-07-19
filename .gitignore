@@ -1,0 +1,7 @@
+.idea/
+venv/
+tests/.pytest_cache/
+tests/__pycache__/
+app/__pycache__/
+app/scraper.log
+app/scraper_solution.py
