@@ -9,7 +9,7 @@ def test_present_rabotat():
         pos='verb',
         definition='to work',
         tense=Tense.PRESENT,
-        verbClass=VerbClass.FIRST
+        verbClass=VerbClass.A
     )
 
     conjugator = VerbConjugator()
@@ -32,5 +32,5 @@ def test_present_rabotat():
         assert words[i].person == person
         assert words[i].number == number
         assert words[i].tense == Tense.PRESENT
-        assert words[i].verbClass == VerbClass.FIRST
+        assert words[i].verbClass == VerbClass.A
 
