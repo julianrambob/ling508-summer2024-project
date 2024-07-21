@@ -16,18 +16,18 @@ def test_first_declension_rabota():
     words = declined.decline_first(lex_entry.form, lex_entry.definition)
 
     expected_forms = [
-        ("работаю", Case.NOMINATIVE, Number.SINGULAR),
-        ("работаем", Case.NOMINATIVE, Number.PLURAL),
-        ("работаешь", Case.ACCUSATIVE, Number.SINGULAR),
-        ("работаете", Case.ACCUSATIVE, Number.PLURAL),
-        ("работает", Case.GENITIVE, Number.SINGULAR),
-        ("работают", Case.GENITIVE, Number.PLURAL),
-        ("работаем", Case.PREPOSITIONAL, Number.SINGULAR),
-        ("работаете", Case.PREPOSITIONAL, Number.PLURAL),
-        ("работаем", Case.DATIVE, Number.SINGULAR),
-        ("работаете", Case.DATIVE, Number.PLURAL),
-        ("работаем", Case.INSTRUMENTAL, Number.SINGULAR),
-        ("работаете", Case.INSTRUMENTAL, Number.PLURAL),
+        ("работа", Case.NOMINATIVE, Number.SINGULAR),
+        ("работы", Case.NOMINATIVE, Number.PLURAL),
+        ("работу", Case.ACCUSATIVE, Number.SINGULAR),
+        ("работы", Case.ACCUSATIVE, Number.PLURAL),
+        ("работы", Case.GENITIVE, Number.SINGULAR),
+        ("работ", Case.GENITIVE, Number.PLURAL),
+        ("работе", Case.PREPOSITIONAL, Number.SINGULAR),
+        ("работах", Case.PREPOSITIONAL, Number.PLURAL),
+        ("работе", Case.DATIVE, Number.SINGULAR),
+        ("работам", Case.DATIVE, Number.PLURAL),
+        ("работой", Case.INSTRUMENTAL, Number.SINGULAR),
+        ("работами", Case.INSTRUMENTAL, Number.PLURAL)
     ]
 
     assert len(words) == len(expected_forms)
