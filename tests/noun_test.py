@@ -4,16 +4,9 @@ from app.nounDecliner import NounDecliner
 
 def test_first_declension_rabota():
 
-    lex_entry = Noun(
-        form='работа',
-        pos='noun',
-        definition='worker/laborer',
-        declension=Declension.FIRST
-    )
-
     declined = NounDecliner()
 
-    words = declined.decline_first(lex_entry.form, lex_entry.definition)
+    words = declined.decline_first('работа', 'worker/laborer')
 
     expected_forms = [
         ("работа", Case.NOMINATIVE, Number.SINGULAR),
