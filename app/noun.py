@@ -1,14 +1,17 @@
 from app.enum import *
-class Noun:
+from app.word import Word
+class Noun(Word):
 
     def __init__(self,
-                 case: Case,
-                 person: Person,
-                 gender: Gender,
-                 number: Number,
-                 declension: Declension):
+                 form: str,
+                 pos: str,
+                 definition: str,
+                 case: Case = None,
+                 gender: Gender = None,
+                 number: Number = None,
+                 declension: Declension = None):
+        super().__init__(form, pos, definition)
         self.case = case
-        self.person = person
         self.gender = gender
         self.number = number
         self.declension = declension
