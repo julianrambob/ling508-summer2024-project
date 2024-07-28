@@ -15,6 +15,6 @@ CREATE TABLE nouns (
 INSERT INTO nouns (form, pos, definition, case, gender, number, declension)
 VALUES
 ('дом', 'noun', 'house', 'nominative', 'masculine', 'singular', 'first'),
-('работу', 'noun', 'worker/laborer', 'accusative', 'feminine', 'singular', 'first')
+('работу', 'noun', 'worker/laborer', 'accusative', 'feminine', 'singular', 'first'),
 ('собака', 'noun', 'dog', 'nominative', 'feminine', 'singular', 'first'),
-('окно', 'noun', 'window', 'nominative', 'neuter', 'singular', 'secone');
+('окно', 'noun', 'window', 'nominative', 'neuter', 'singular', 'second');
