@@ -1,6 +1,7 @@
 from db.repository import *
 import mysql.connector
 from app.noun import Noun
+
 class MysqlRepository(Repository):
     def __init__(self):
         super().__init__()
@@ -17,9 +18,10 @@ class MysqlRepository(Repository):
         self.cursor = self.connection.cursor()
 
     def __del__(self):
-        if self.cursor is not None:
+
+        if hasattr(self, 'cursor') and self.cursor is not None:
             self.cursor.close()
-        if self.connection is not None:
+        if hasattr(self, 'connection') and self.connection is not None:
             self.connection.close()
         
 
