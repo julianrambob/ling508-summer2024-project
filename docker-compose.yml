@@ -1,16 +1,5 @@
 version: '2'
 services:
-  app:
-    build: .
-    depends_on:
-      - db
-    environment:
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-    command: ["pytest"]
-
   db:
     image: mysql:5.7
     ports:
@@ -18,16 +7,25 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: russian_nouns
-    volumes:
-      - ./data:/docker-entrypoint-initdb.d
+    networks:
+      - mynetwork
 
-  test:
-    build: .
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: russian_nouns
     depends_on:
       - db
-    environment:
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-    command: ["pytest"]
+    networks:
+      - mynetwork
+    command: python -m pytest tests
+
+networks:
+  mynetwork:
+
