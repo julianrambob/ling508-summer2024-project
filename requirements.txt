@@ -1,3 +1,2 @@
 pytest
-mysql-connector-python
-beautifulsoup4
+mysql-connector
