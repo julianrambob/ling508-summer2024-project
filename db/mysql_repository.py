@@ -1,6 +1,6 @@
 from db.repository import *
 import mysql.connector
-
+from app.noun import Noun
 class MysqlRepository(Repository):
     def __init__(self):
         super().__init__()
