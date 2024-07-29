@@ -27,6 +27,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Wait for MySQL to be healthy
+        run: |
+          until docker ps --filter health=healthy | grep mysql; do
+            echo "Waiting for MySQL to be healthy..."
+            sleep 5
+          done
+
       - name: Build the docker image
         run: |
           docker build . --file Dockerfile --tag ${ORG}/${IMAGE_NAME}:${TAG}
