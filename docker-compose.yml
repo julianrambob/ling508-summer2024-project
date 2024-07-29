@@ -1,14 +1,39 @@
-version: '2'
+version: '3.8'
 services:
-  db:
-    image: mysql:latest
-    ports:
-      - "32000:3306"
+  mysql:
+    image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: root
-  test:
-    image: python:latest
+      MYSQL_DATABASE: russian_nouns
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    networks:
+      - test_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
-      - db
-    command: pytest
+      mysql:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: russian_nouns
+    command: ["python", "-m", "pytest", "tests"]
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    driver: bridge
+
 
