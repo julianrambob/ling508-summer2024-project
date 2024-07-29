@@ -8,21 +8,7 @@ on:
 
 jobs:
   test:
-    env:
-      ORG: "uazhlt"
-      IMAGE_NAME: "ling508-summer2024-project"
-      TAG: "latest"
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: russian_nouns
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10
 
     steps:
       - name: Checkout code
@@ -33,25 +19,45 @@ jobs:
           sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
 
+      - name: Create Docker Compose file
+        run: |
+          cat <<EOF > docker-compose.yml
+          version: '3.8'
+          services:
+            mysql:
+              image: mysql:5.7
+              environment:
+                MYSQL_ROOT_PASSWORD: root
+                MYSQL_DATABASE: russian_nouns
+              ports:
+                - "3306:3306"
+              healthcheck:
+                test: ["CMD", "mysqladmin", "ping", "-uroot", "-proot"]
+                interval: 10s
+                timeout: 10s
+                retries: 10
+
+            app:
+              build:
+                context: .
+                dockerfile: Dockerfile
+              depends_on:
+                mysql:
+                  condition: service_healthy
+              environment:
+                MYSQL_HOST: mysql
+                MYSQL_PORT: 3306
+                MYSQL_USER: root
+                MYSQL_PASSWORD: root
+                MYSQL_DATABASE: russian_nouns
+              command: ["python", "-m", "pytest", "tests"]
+          EOF
+
       - name: Build and run containers
         run: |
           docker-compose up --build --abort-on-container-exit
 
-      - name: Wait for MySQL to be healthy
+      - name: Print MySQL logs if tests fail
+        if: failure()
         run: |
-          until docker ps --filter health=healthy | grep mysql; do
-            echo "Waiting for MySQL to be healthy..."
-            sleep 5
-          done
-
-      - name: Test MySQL connection
-        run: |
-          docker run --rm --network host mysql:5.7 mysql -h127.0.0.1 -uroot -proot -e "SHOW DATABASES;"
-
-      - name: Build the docker image
-        run: |
-          docker build . --file Dockerfile --tag ${ORG}/${IMAGE_NAME}:${TAG}
-
-      - name: Run the tests
-        run: |
-          docker run -i ${ORG}/${IMAGE_NAME}:${TAG} python -m pytest tests
+          docker logs $(docker ps --filter "name=mysql" -q)
