@@ -36,6 +36,8 @@ jobs:
                 interval: 10s
                 timeout: 10s
                 retries: 10
+              networks:
+                - test_network
 
             app:
               build:
@@ -51,6 +53,12 @@ jobs:
                 MYSQL_PASSWORD: root
                 MYSQL_DATABASE: russian_nouns
               command: ["python", "-m", "pytest", "tests"]
+              networks:
+                - test_network
+
+          networks:
+            test_network:
+              driver: bridge
           EOF
 
       - name: Build and run containers
@@ -60,4 +68,5 @@ jobs:
       - name: Print MySQL logs if tests fail
         if: failure()
         run: |
-          docker logs $(docker ps --filter "name=mysql" -q)
+          MYSQL_CONTAINER_ID=$(docker ps --filter "name=mysql" -q)
+          docker logs $MYSQL_CONTAINER_ID
