@@ -69,6 +69,6 @@ def test_mapper():
     assert noun.number == Number.SINGULAR
     assert noun.declension == Declension.FIRST
 
-#def test_load_lexicon():
-#    lexicon = repo.load_lexicon()
-#    assert len(lexicon) >= 4
+def test_load_lexicon():
+    lexicon = repo.load_lexicon2()
+    assert len(lexicon) >= 4
