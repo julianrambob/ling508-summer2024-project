@@ -1,5 +1,6 @@
 from db.mysql_repository import *
 
+
 repo = MysqlRepository()
 
 noun_entry1 = {
@@ -50,7 +51,7 @@ def test_map_noun_case():
 
 
 def test_mapper():
-    noun = repo.mapper(noun_entry1)
+    noun = repo.mapper(noun_entry2)
     assert noun.form == 'работу'
     assert noun.pos == 'noun'
     assert noun.definition == 'worker/laborer'
@@ -59,7 +60,7 @@ def test_mapper():
     assert noun.number == Number.SINGULAR
     assert noun.declension == Declension.FIRST
 
-    noun = repo.mapper(noun_entry2)
+    noun = repo.mapper(noun_entry1)
     assert noun.form == 'дом'
     assert noun.pos == 'noun'
     assert noun.definition == 'house'

@@ -1,3 +1,5 @@
+from unittest import case
+
 from db.repository import *
 import mysql.connector
 from app.noun import Noun
@@ -18,11 +20,8 @@ class MysqlRepository(Repository):
         self.cursor = self.connection.cursor()
 
     def __del__(self):
-
-        if hasattr(self, 'cursor') and self.cursor is not None:
-            self.cursor.close()
-        if hasattr(self, 'connection') and self.connection is not None:
-            self.connection.close()
+        self.cursor.close()
+        self.connection.close()
         
 
     def map_verb_class(self, entry: dict) -> VerbClass:
@@ -40,7 +39,7 @@ class MysqlRepository(Repository):
         noun_gender_switcher = {'neuter': Gender.NEUTER,
                                 'masculine': Gender.MASCULINE,
                                 'feminine': Gender.FEMININE}
-        noun_gender = noun_gender_switcher.get(entry.get('noun_gender'), None)
+        noun_gender = noun_gender_switcher.get(entry.get('gender'), None)
         return noun_gender
 
     def map_noun_declension(self, entry: dict) -> Declension:
@@ -48,23 +47,23 @@ class MysqlRepository(Repository):
                                     'second': Declension.SECOND,
                                     'third': Declension.THIRD,
                                     'undeclined': Declension.UNDECLINED}
-        noun_declension = noun_declension_switcher.get(entry.get('noun_declension', None))
+        noun_declension = noun_declension_switcher.get(entry.get('declension', None))
         return noun_declension
     
     def map_noun_number(self, entry:dict) -> Number:
         noun_number_switcher = {'singular': Number.SINGULAR,
                                 'plural': Number.PLURAL}
-        noun_number = noun_number_switcher.get(entry.get('noun_number', None))
+        noun_number = noun_number_switcher.get(entry.get('number', None))
         return noun_number
     
     def map_noun_case(self, entry: dict) -> Case:
-        noun_case_switcher = {'nominitave': Case.NOMINATIVE,
+        noun_case_switcher = {'nominative': Case.NOMINATIVE,
                                     'accusative': Case.ACCUSATIVE,
                                     'genitive': Case.GENITIVE,
                                     'prepositional': Case.PREPOSITIONAL,
                                     'dative': Case.DATIVE,
                                     'instrumental': Case.INSTRUMENTAL}
-        noun_case = noun_case_switcher.get(entry.get('noun_case', None))
+        noun_case = noun_case_switcher.get(entry.get('case', None))
         return noun_case
     
     def mapper(self, entry: dict) -> Noun:
@@ -80,11 +79,26 @@ class MysqlRepository(Repository):
         return noun
 
 
-    def load_lexicon(self) -> list[Noun]:
+    def load_lexicon2(self) -> list[Noun]:
+        sql = 'SELECT * FROM russian_nouns'
+        self.cursor.execute(sql)
+        entries = [{
+            'id': id,
+            'form': form,
+            'pos': pos,
+            'definition': definition,
+            'nounCase': nounCase,
+            'gender': gender,
+            'number': number,
+            'declension': declension} for (id, form, pos, definition, nounCase, gender, number, declension) in self.cursor]
+        lexicon = [self.mapper(entry) for entry in entries]
+        return lexicon
+    def load_lexicon(self):
         sql = 'SELECT * FROM nouns'
         self.cursor.execute(sql)
+        results = self.cursor.fetchall()
         lexicon = []
-        for row in self.cursor.fetchall():
+        for row in results:
             entry = {
                 'id': row[0],
                 'form': row[1],

@@ -1,4 +1,6 @@
+DROP DATABASE IF EXISTS russian_nouns;
 CREATE DATABASE russian_nouns;
+ALTER DATABASE russian_nouns CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE russian_nouns;
 
 CREATE TABLE nouns (
@@ -6,13 +8,15 @@ CREATE TABLE nouns (
     form VARCHAR(100),
     pos VARCHAR(50),
     definition VARCHAR(255),
-    case VARCHAR(50),
+    nounCase VARCHAR(50),
     gender VARCHAR(50),
     number VARCHAR(50),
     declension VARCHAR(50),
     PRIMARY KEY (id)
 );
-INSERT INTO nouns (form, pos, definition, case, gender, number, declension)
+ALTER TABLE nouns
+MODIFY form VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+INSERT INTO nouns (form, pos, definition, nounCase, gender, number, declension)
 VALUES
 ('дом', 'noun', 'house', 'nominative', 'masculine', 'singular', 'first'),
 ('работу', 'noun', 'worker/laborer', 'accusative', 'feminine', 'singular', 'first'),

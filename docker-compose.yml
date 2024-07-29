@@ -1,31 +1,14 @@
 version: '2'
 services:
   db:
-    image: mysql:5.7
+    image: mysql:latest
     ports:
       - "32000:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: russian_nouns
-    networks:
-      - mynetwork
-
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_USER: root
-      DB_PASSWORD: root
-      DB_NAME: russian_nouns
+  test:
+    image: python:latest
     depends_on:
       - db
-    networks:
-      - mynetwork
-    command: python -m pytest tests
-
-networks:
-  mynetwork:
+    command: pytest
 
