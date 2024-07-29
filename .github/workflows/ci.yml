@@ -65,8 +65,3 @@ jobs:
         run: |
           docker-compose up --build --abort-on-container-exit
 
-      - name: Print MySQL logs if tests fail
-        if: failure()
-        run: |
-          MYSQL_CONTAINER_ID=$(docker ps --filter "name=mysql" -q)
-          docker logs $MYSQL_CONTAINER_ID
