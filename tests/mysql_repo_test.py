@@ -70,5 +70,7 @@ def test_mapper():
     assert noun.declension == Declension.FIRST
 
 def test_load_lexicon():
-    lexicon = repo.load_lexicon2()
+    lexicon = repo.load_lexicon()
+    print()
+    print('Lexicon size: ' + str(len(lexicon)))
     assert len(lexicon) >= 4

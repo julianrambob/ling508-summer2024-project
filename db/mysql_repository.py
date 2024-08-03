@@ -1,8 +1,8 @@
 from unittest import case
-
+from model.enum import *
 from db.repository import *
 import mysql.connector
-from app.noun import Noun
+from model.noun import Noun
 
 class MysqlRepository(Repository):
     def __init__(self):
@@ -10,10 +10,10 @@ class MysqlRepository(Repository):
         config = {
             'user': 'root',
             'password': 'root',
-            'host': 'mysql', # to run LOCALLY, this should be localhost
-            #'host': 'localhost',
-            'port': '3306', # to run LOCALLY, this should be 32000
-            #'port': '32000',
+            #'host': 'mysql', # to run LOCALLY, this should be localhost
+            'host': 'localhost',
+            #'port': '3306', # to run LOCALLY, this should be 32000
+            'port': '32000',
             'database': 'russian_nouns'
         }
         self.connection = mysql.connector.connect(**config)
@@ -68,6 +68,7 @@ class MysqlRepository(Repository):
     
     def mapper(self, entry: dict) -> Noun:
         noun = Noun(
+            id=entry.get('id'),
             form=entry.get('form'),
             pos=entry.get('pos'),
             definition=entry.get('definition'),
@@ -111,3 +112,30 @@ class MysqlRepository(Repository):
             }
             lexicon.append(entry)
         return lexicon
+
+    def insert_first_declension(self, noun) -> None:
+        sql = ("INSERT INTO russian_nouns "
+               "(id, form, pos, definition, nounCase, gender, number, declension) "
+               "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)")
+        self.cursor.execute(sql, (id, noun.form, noun.pos, noun.definition,noun.case, noun.gender, noun.number, noun.declension))
+
+    def insert_noun_decliner(self, nounEndings: list[Noun]) -> None:
+        for noun in nounEndings:
+            fields = noun.get_fields()
+            self.insert_first_declension(fields)
+
+    def drop_nouns(self):
+        sql = 'DROP TABLE IF EXISTS russian_nouns'
+        self.cursor.execute(sql)
+        sql = 'DROP TABLE IF EXISTS nouns'
+        self.cursor.execute(sql)
+        self.connection.commit()
+    def get_details(self, form:str) -> dict:
+        sql = "SELECT id, form, pos, definition, nounCase, gender, number, declension FROM nouns WHERE form = %s"
+        self.cursor.execute(sql, (form,))
+        entry = self.cursor.fetchone()
+        if entry:
+            id, form, pos, definition, case, gender, number, declension = entry
+            return {'id': id, 'form': form, 'pos': pos, 'definition': definition, 'case': case, 'gender': gender, 'number': number, 'declension': declension}
+        else:
+            return None

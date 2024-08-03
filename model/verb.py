@@ -1,9 +1,10 @@
-from app.enum import *
-from app.word import Word
+from model.enum import *
+from model.word import Word
 
 class Verb(Word):
 
-    def __init__(self, 
+    def __init__(self,
+                 id:int,
                  form: str, 
                  pos: str, 
                  definition: str,
@@ -13,7 +14,7 @@ class Verb(Word):
                  gender: Gender = None,
                  number: Number = None,
                  ):
-        super().__init__(form, pos, definition)
+        super().__init__(id, form, pos, definition)
         self.tense = tense
         self.person = person
         self.gender = gender

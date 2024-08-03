@@ -1,10 +1,11 @@
 
-from app.enum import *
-from app.verb import Verb
-from app.verbConjugator import VerbConjugator
+from model.enum import *
+from model.verb import Verb
+from model.verbConjugator import VerbConjugator
 
 def test_present_rabotat():
     lex_entry = Verb(
+        id=1,
         form='работать',
         pos='verb',
         definition='to work',
@@ -14,7 +15,7 @@ def test_present_rabotat():
 
     conjugator = VerbConjugator()
 
-    words = conjugator.conjugate_present(lex_entry.form, lex_entry.definition)
+    words = conjugator.conjugate_present(lex_entry.id, lex_entry.form, lex_entry.definition)
 
     rabotat_conjugations = [
         ("работаю", Person.FIRST, Number.SINGULAR),

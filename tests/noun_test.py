@@ -1,12 +1,12 @@
-from app.enum import *
-from app.noun import Noun
-from app.nounDecliner import NounDecliner
+from model.enum import *
+from model.noun import Noun
+from model.nounDecliner import NounDecliner
 
 def test_first_declension_rabota():
 
     declined = NounDecliner()
 
-    words = declined.decline_first('работа', 'worker/laborer')
+    words = declined.decline_first(0,'работа', 'worker/laborer')
 
     expected_forms = [
         ("работа", Case.NOMINATIVE, Number.SINGULAR),

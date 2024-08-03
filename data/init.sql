@@ -19,6 +19,7 @@ MODIFY form VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 INSERT INTO nouns (form, pos, definition, nounCase, gender, number, declension)
 VALUES
 ('дом', 'noun', 'house', 'nominative', 'masculine', 'singular', 'first'),
+('работа', 'noun', 'worker/laborer', 'nominative', 'feminine', 'singular', 'first'),
 ('работу', 'noun', 'worker/laborer', 'accusative', 'feminine', 'singular', 'first'),
 ('собака', 'noun', 'dog', 'nominative', 'feminine', 'singular', 'first'),
 ('окно', 'noun', 'window', 'nominative', 'neuter', 'singular', 'second');

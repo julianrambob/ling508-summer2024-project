@@ -1,6 +1,5 @@
 import abc
-from app.enum import *
-from app.noun import Noun
+from model.noun import Noun
 
 
 class Repository(metaclass=abc.ABCMeta):

@@ -1,5 +1,5 @@
-from app.enum import *
-from app.noun import *
+
+from model.noun import *
 class NounDecliner:
     def __init__(self):
         self.noun_endings = {
@@ -17,12 +17,13 @@ class NounDecliner:
             (Case.INSTRUMENTAL, Number.PLURAL): 'ами'
         }
 
-    def decline_first(self, noun: str, definition: str) -> list:
+    def decline_first(self, id:int, noun: str, definition: str) -> list:
         stem = noun[:-1]
         declined = []
         for (case, number), ending in self.noun_endings.items():
             form = stem + ending
-            declined.append(Noun(form = form,
+            declined.append(Noun(
+                id = id, form = form,
                                      pos = 'noun',
                                      definition = definition,
                                      declension = Declension.FIRST,
