@@ -3,7 +3,7 @@ CREATE DATABASE russian_nouns;
 ALTER DATABASE russian_nouns CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE russian_nouns;
 
-CREATE TABLE nouns (
+CREATE TABLE IF NOT EXISTS nouns (
     id INT NOT NULL AUTO_INCREMENT,
     form VARCHAR(100),
     pos VARCHAR(50),
