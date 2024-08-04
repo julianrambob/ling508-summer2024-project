@@ -10,10 +10,10 @@ class MysqlRepository(Repository):
         config = {
             'user': 'root',
             'password': 'root',
-            #'host': 'mysql', # to run LOCALLY, this should be localhost
-            'host': 'localhost',
-            #'port': '3306', # to run LOCALLY, this should be 32000
-            'port': '32000',
+            'host': 'mysql', # to run LOCALLY, this should be localhost
+            #'host': 'localhost',
+            'port': '3306', # to run LOCALLY, this should be 32000
+            #'port': '32000',
             'database': 'russian_nouns'
         }
         self.connection = mysql.connector.connect(**config)
