@@ -20,8 +20,15 @@ class MysqlRepository(Repository):
         self.cursor = self.connection.cursor()
 
     def __del__(self):
-        self.cursor.close()
-        self.connection.close()
+        try:
+            if self.cursor:
+                self.cursor.close()
+            if self.connection:
+                self.connection.close()
+        except ReferenceError:
+            pass
+        except Exception as e:
+            print(f"Error in __del__: {e}")
         
 
     def map_verb_class(self, entry: dict) -> VerbClass:
