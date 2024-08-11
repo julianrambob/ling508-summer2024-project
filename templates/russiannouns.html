@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Russian First Declension Nouns Flashcard Generator</title>
+
+    <script>
+        function convertToCyrillic() {
+            const formInput = document.getElementById('form');
+            const formValue = formInput.value;
+
+            fetch('/convert_to_cyrillic', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ text: formValue })
+            })
+            .then(response => response.json())
+            .then(data => {formInput.value = data.convertedText;});
+        }
+    </script>
+    <style>
+        th, .forms{
+            width: 14%;
+            padding: 10px;
+            border: 1px solid black;
+        }
+        .key{
+            width: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add New Noun</h1>
+    <table>
+        <tr>
+            <td class="key">a:а</td>
+            <td class="key">b:б</td>
+            <td class="key">v:в</td>
+            <td class="key">g:г</td>
+            <td class="key">d:д</td>
+            <td class="key">ye:е</td>
+            <td class="key">yo:ё</td>
+            <td class="key">zh:ж</td>
+        </tr>
+        <tr>
+            <td class="key">z:з</td>
+            <td class="key">i:и</td>
+            <td class="key">yi:й</td>
+            <td class="key">k:к</td>
+            <td class="key">l:л</td>
+            <td class="key">m:м</td>
+            <td class="key">n:н</td>
+            <td class="key">o:о</td>
+        </tr>
+        <tr>
+            <td class="key">p:п</td>
+            <td class="key">r:р</td>
+            <td class="key">s:с</td>
+            <td class="key">t:т</td>
+            <td class="key">u:у</td>
+            <td class="key">f:ф</td>
+            <td class="key">x:х</td>
+            <td class="key">ts:ц</td>
+        </tr>
+        <tr>
+            <td class="key">ch:ч</td>
+            <td class="key">sh:ш</td>
+            <td class="key">shh:щ</td>
+            <td class="key">jj:ы</td>
+            <td class="key">e:э</td>
+            <td class="key">yu:ю</td>
+            <td class="key">ya:я</td>
+            <td class="key">j:ь</td>
+        </tr>
+    </table>
+<br><br>
+<form action="/submit_noun" method="post">
+    <label for="form">Form:</label>
+    <input type="text" id="form" name="form" required>
+    <input type="button" value="Convert to Cyrillic" onclick="convertToCyrillic()"><br><br>
+    <label for="definition">Definition:</label>
+    <input type="text" id="definition" name="definition" required><br><br>
+
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" required>
+        <option value="1">Masculine</option>
+        <option value="2">Feminine</option>
+    </select><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+    {% if message != '' %}
+        <p style="color: olivedrab">{{message}}</p>
+    {% endif %}
+
+<!--</body>
+</html> -->
+    <h2>List of Entries</h2>
+    <form action="/flashcards" method="post">
+        <button type="submit">Use Flashcards</button>
+    </form>
+    <form action="/refresh_database" method="post">
+    <button type="submit">Refresh Database</button>
+</form>
+
+    <ul>
+        {% for noun in nouns %}
+        <li>
+            <!--
+            Form: {{ noun.form }},
+            Definition: {{ noun.definition }},
+            Case: {{ noun.case }},
+            Number: {{ noun.number }}
+            -->
+            <table>
+                <tr>
+                    <th>{{noun[0].definition}}</th><th>Nominative</th><th>Accusative</th><th>Genitive</th><th>Prepositional</th><th>Dative</th><th>Instrumental</th>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;" class="forms">Singular</td>
+                    <td class="forms">{{noun[0].form}}</td>
+                    <td class="forms">{{noun[1].form}}</td>
+                    <td class="forms">{{noun[2].form}}</td>
+                    <td class="forms">{{noun[3].form}}</td>
+                    <td class="forms">{{noun[4].form}}</td>
+                    <td class="forms">{{noun[5].form}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;" class="forms">Plural</td>
+                    <td class="forms">{{noun[6].form}}</td>
+                    <td class="forms">{{noun[7].form}}</td>
+                    <td class="forms">{{noun[8].form}}</td>
+                    <td class="forms">{{noun[9].form}}</td>
+                    <td class="forms">{{noun[10].form}}</td>
+                    <td class="forms">{{noun[11].form}}</td>
+                </tr>
+            </table>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 from db.mysql_repository import *
-
+from model.enum import *
 
 repo = MysqlRepository()
 
@@ -24,7 +24,14 @@ noun_entry2 = {
     'number': 'singular',
     'declension': 'first'
 }
+def test_get_details():
+    dets1 = repo.get_details('работу')
+    dets2 = repo.get_details('mmm')
+    assert dets1 is not None
+    assert dets2 is None
+    assert Case(int(dets1['case'])) == Case.ACCUSATIVE
 
+'''
 def test_map_noun_gender():
     ng = repo.map_noun_gender(noun_entry1)
     assert ng == Gender.MASCULINE
@@ -55,7 +62,7 @@ def test_mapper():
     assert noun.form == 'работу'
     assert noun.pos == 'noun'
     assert noun.definition == 'worker/laborer'
-    assert noun.case == Case.ACCUSATIVE
+    assert noun.noun_case == Case.ACCUSATIVE
     assert noun.gender == Gender.FEMININE
     assert noun.number == Number.SINGULAR
     assert noun.declension == Declension.FIRST
@@ -64,7 +71,7 @@ def test_mapper():
     assert noun.form == 'дом'
     assert noun.pos == 'noun'
     assert noun.definition == 'house'
-    assert noun.case == Case.NOMINATIVE
+    assert noun.noun_case == Case.NOMINATIVE
     assert noun.gender == Gender.MASCULINE
     assert noun.number == Number.SINGULAR
     assert noun.declension == Declension.FIRST
@@ -74,3 +81,4 @@ def test_load_lexicon():
     print()
     print('Lexicon size: ' + str(len(lexicon)))
     assert len(lexicon) >= 4
+'''

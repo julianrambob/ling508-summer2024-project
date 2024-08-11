@@ -2,3 +2,6 @@ pytest
 mysql-connector
 requests
 beautifulsoup4
+Flask
+Flask-RESTful
+httpie==3.2.3

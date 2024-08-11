@@ -1,9 +1,17 @@
 # Use Cases
-I have three working uses cases with plans to add more to support verb parsing and conjugating
-### 1. User enters a russian noun in Cyrillic or Latin characters as input and the app returns parse information (person, number, gender, case, declension) and translation. 
-Input: "работу" or "rabotu" 
 
-Output: 'работу: worker/laborer, accusative, feminine, singular, first'
+### 1. User enters a russian noun in Cyrillic or Latin characters as input and the app generates database entries for each morphological form. 
+Input: "работа" or "rabota" 
+
+Output: 
+
+'робота successfully entered into the database.'
+
+| worker       | Nominative | Accusative | Genitive | Prepositional | Dative | Instrumental |
+|--------------|------------|------------|----------|---------------|--------|--------------|
+| **Singular** | работа     | работу     | роботы   | роботе        | роботе | роботами     |
+| **Plural**   | роботы     | роботах    | роботе   | роботам       | роботами| роботах      |
+
 
 ### 2. The app returns the Cyrillic text from Latin transliteration input from the following key:
 
@@ -43,4 +51,26 @@ j: ь
 Input: "privyet rabotnik"
 Output: "привет работник"
 
-### 3. Takes user russian noun input and returns all forms for that noun
+### 3. Users can use flashcards randomly generated from database contents
+
+Input: 
+
+| use flashcards |
+|----------------|
+
+Output: *example using робота*
+
+#### Flashcard for робота
+
+| reveal |
+|--------| 
+
+*clicking the reveal button shows:* роботам
+
+Case: Dative
+
+Number: Plural
+
+### 4. Users can refresh the database to delete all contents. 
+
+This gives the users control over what nouns they wish to study with the flashcard function.

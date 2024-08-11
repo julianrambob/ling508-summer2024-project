@@ -4,9 +4,9 @@ from model.nounDecliner import NounDecliner
 
 def test_first_declension_rabota():
 
-    declined = NounDecliner()
+    declined = NounDecliner('работа', 'worker/laborer', gender=Gender.FEMININE)
 
-    words = declined.decline_first(0,'работа', 'worker/laborer')
+    words = declined.decline_first('работа', 'worker/laborer', gender=Gender.FEMININE)
 
     expected_forms = [
         ("работа", Case.NOMINATIVE, Number.SINGULAR),
@@ -29,5 +29,5 @@ def test_first_declension_rabota():
         assert words[i].form == form
         assert words[i].pos == 'noun'
         assert words[i].declension == Declension.FIRST
-        assert words[i].case == case
-        assert words[i].number == number
+        assert Case(words[i].noun_case) == case
+        assert Number(words[i].number) == number

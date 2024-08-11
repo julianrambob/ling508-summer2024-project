@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS nouns (
     form VARCHAR(100),
     pos VARCHAR(50),
     definition VARCHAR(255),
+    base_form VARCHAR(100),
     nounCase VARCHAR(50),
     gender VARCHAR(50),
     number VARCHAR(50),
@@ -16,10 +17,10 @@ CREATE TABLE IF NOT EXISTS nouns (
 );
 ALTER TABLE nouns
 MODIFY form VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-INSERT INTO nouns (form, pos, definition, nounCase, gender, number, declension)
+/*INSERT INTO nouns (form, pos, definition, nounCase, gender, number, declension)
 VALUES
 ('дом', 'noun', 'house', 'nominative', 'masculine', 'singular', 'first'),
 ('работа', 'noun', 'worker/laborer', 'nominative', 'feminine', 'singular', 'first'),
 ('работу', 'noun', 'worker/laborer', 'accusative', 'feminine', 'singular', 'first'),
 ('собака', 'noun', 'dog', 'nominative', 'feminine', 'singular', 'first'),
-('окно', 'noun', 'window', 'nominative', 'neuter', 'singular', 'second');
+('окно', 'noun', 'window', 'nominative', 'neuter', 'singular', 'second');*/

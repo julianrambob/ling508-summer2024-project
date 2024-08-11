@@ -3,26 +3,27 @@ from model.word import Word
 class Noun(Word):
 
     def __init__(self,
-                 id: int,
                  form: str,
                  pos: str,
                  definition: str,
-                 case: Case = None,
+                 base_form: str,
+                 noun_case: Case = None,
                  gender: Gender = None,
                  number: Number = None,
                  declension: Declension = None):
-        super().__init__(id, form, pos, definition)
-        self.case = case
+        super().__init__(form, pos, definition)
+        self.base_form = base_form
+        self.noun_case = noun_case
         self.gender = gender
         self.number = number
         self.declension = declension
 
     def get_fields(self) -> dict:
         fields = {
-            'id': self.id,
             'form': self.form,
             'pos': self.pos,
-            'case': self.case,
+            'base_form': self.base_form,
+            'case': self.noun_case,
             'gender': self.gender,
             'number': self.number,
             'declension': self.declension

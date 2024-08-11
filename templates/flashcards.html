@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards</title>
+        <style>
+        #noun-form {
+            display: none;
+        }
+        #reveal-button{
+            display: block;
+        }
+    </style>
+        <script>
+        function revealForm() {
+            document.getElementById('noun-form').style.display = 'block';
+            document.getElementById('reveal-button').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    {% if noun %}
+    <h1>Flashcard for {{noun.base_form}}</h1>
+    <div>
+        <h2 id="noun-form">{{ noun.form }}</h2> <button id="reveal-button" onclick="revealForm()">Reveal</button>
+        <p>Case: {{ case_name }}</p>
+        <p>Number: {{ number_name }}</p>
+
+    </div>
+    {% else %}
+    <p>No noun data available.</p>
+    {% endif %}
+    {% if message %}
+        <p>{{message}}</p>
+    {% endif %}
+    <br>
+    <form action="/">
+        <button type="submit">Add more nouns</button>
+    </form>
+    <br>
+    <form action="/flashcards" method="post">
+        <button type="submit">Next Flashcard</button>
+    </form>
+</body>
+</html>
