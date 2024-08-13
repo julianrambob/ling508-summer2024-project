@@ -4,7 +4,7 @@
 This application serves as a study tool for Russian morphological forms, focusing on first declension nouns. Users can submit a noun in the nominative singular form to the database, and the app generates its corresponding forms for each case and number. The application allows users to add multiple nouns for study and offers a refresh option to clear the database.
 
 ### Installation
-To run the project locally (windows):
+To run the project using docker:
 
 1. **Open you local repository folder in a terminal and run the following commands**
     
@@ -17,12 +17,9 @@ To run the project locally (windows):
    ```
    
    ```bash
-   pip install -r requirements.txt
+   docker-compose up --build
    ```
-   
-   ```bash
-   python app.py
-   ```
+
    
 2. **Click on the link generated in the terminal**
    ```bash

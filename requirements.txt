@@ -1,7 +1,6 @@
 pytest
-mysql-connector
-requests
 beautifulsoup4
+mysql-connector-python
 Flask
-Flask-RESTful
-httpie==3.2.3
+httpie
+flask-cors
