@@ -4,7 +4,6 @@ from model.word import Word
 class Verb(Word):
 
     def __init__(self,
-                 id:int,
                  form: str, 
                  pos: str, 
                  definition: str,
@@ -14,7 +13,7 @@ class Verb(Word):
                  gender: Gender = None,
                  number: Number = None,
                  ):
-        super().__init__(id, form, pos, definition)
+        super().__init__(form, pos, definition)
         self.tense = tense
         self.person = person
         self.gender = gender

@@ -88,7 +88,6 @@ class MysqlRepository(Repository):
         )
         return noun
 
-
     def load_lexicon2(self) -> list[Noun]:
         sql = 'SELECT * FROM russian_nouns'
         self.cursor.execute(sql)

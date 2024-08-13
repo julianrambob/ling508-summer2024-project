@@ -1,7 +1,7 @@
 from db.mysql_repository import *
-from app.service import *
+from app.service import Service
 
-service = app.service.Service()
+service = Service()
 repo = MysqlRepository()
 
 #tests for use case 1
@@ -13,7 +13,7 @@ def test_is_cyrillic():
 
 #test for use case 2
 def test_convert_cyrillic():
-    service = app.service.Service()
+
     assert service.convert_to_cyrillic('rabotoyi') == 'работой'
     assert service.convert_to_cyrillic('privyet rabotnik!') == 'привет работник!'
     assert service.is_cyrillic(service.convert_to_cyrillic('dom')) == True

@@ -1,37 +1,21 @@
 from db.mysql_repository import *
 from model.enum import *
+from model.nounDecliner import *
+#sample_insert = NounDecliner('работа', 'worker', Gender.FEMININE)
+#repo = MysqlRepository()
 
-repo = MysqlRepository()
 
-noun_entry1 = {
-    'id': 1,
-    'form': 'дом',
-    'pos': 'noun',
-    'definition': 'house',
-    'case': 'nominative',
-    'gender': 'masculine',
-    'number': 'singular',
-    'declension': 'first'
-}
-
-noun_entry2 = {
-    'id': 2,
-    'form': 'работу',
-    'pos': 'noun',
-    'definition': 'worker/laborer',
-    'case': 'accusative',
-    'gender': 'feminine',
-    'number': 'singular',
-    'declension': 'first'
-}
+'''
 def test_get_details():
+    repo.insert_noun_decliner(sample_insert)
     dets1 = repo.get_details('работу')
     dets2 = repo.get_details('mmm')
     assert dets1 is not None
     assert dets2 is None
     assert Case(int(dets1['case'])) == Case.ACCUSATIVE
 
-'''
+
+
 def test_map_noun_gender():
     ng = repo.map_noun_gender(noun_entry1)
     assert ng == Gender.MASCULINE

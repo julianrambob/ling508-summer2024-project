@@ -11,13 +11,13 @@ class VerbConjugator:
             (Person.THIRD, Number.PLURAL): 'ют'
         }
 
-    def conjugate_present(self,id:int, verb: str, definition: str) -> list:
+    def conjugate_present(self, verb: str, definition: str) -> list:
         stem = verb[:-2]
         conjugations = []
         for (person, number), ending in self.verb_endings.items():
             form = stem + ending
             conjugations.append(Verb(
-                id=id, form=form,
+               form=form,
                                      pos='verb',
                                      definition=definition,
                                      tense=Tense.PRESENT,
